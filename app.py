@@ -8,19 +8,19 @@ import plotly.graph_objs as go
 from plotly.graph_objs import *
 
 ###### Define your variables #####
-tabtitle = 'Titanic!'
+tabtitle = 'Titanic!, Survival by age'
 color1='#92A5E8'
 color2='#8E44AD'
 color3='#FFC300'
 sourceurl = 'https://www.kaggle.com/c/titanic'
-githublink = 'https://github.com/austinlasseter/titanic-example-app'
+githublink = 'https://github.com/gportes24/Titanic-example_app.git'
 
 
 ###### Import a dataframe #######
 df = pd.read_csv("https://raw.githubusercontent.com/austinlasseter/plotly_dash_tutorial/master/00%20resources/titanic.csv")
 df['Female']=df['Sex'].map({'male':0, 'female':1})
 df['Cabin Class'] = df['Pclass'].map({1:'first', 2: 'second', 3:'third'})
-variables_list=['Survived', 'Female', 'Fare', 'Age']
+variables_list=['Female', 'Fare', 'Age']
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -48,7 +48,7 @@ app.layout = html.Div([
 @app.callback(dash.dependencies.Output('display-value', 'figure'),
               [dash.dependencies.Input('dropdown', 'value')])
 def display_value(continuous_var):
-    results=pd.DataFrame(df.groupby(['Cabin Class', 'Embarked'])[continuous_var].mean())
+    results=pd.DataFrame(df.groupby(['Fare', 'Embarked'])[continuous_var].mean())
     # Create a grouped bar chart
     mydata1 = go.Bar(
         x=results.loc['first'].index,
